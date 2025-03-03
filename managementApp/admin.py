@@ -7,6 +7,7 @@ from managementApp.models import CustomUser
 
 
 class UserModel(UserAdmin):
-    pass
+    ordering = ('email',)
+    list_display = ('email', 'user_type')
 
 admin.site.register(CustomUser,UserModel)

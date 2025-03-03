@@ -122,7 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 AUTH_USER_MODEL="managementApp.CustomUser"
-AUTHENTICATION_BACKENDS=['managementApp.EmailBackEnd.EmailBackEnd']
+AUTHENTICATION_BACKENDS=['django.contrib.auth.backends.ModelBackend']
 
 EMAIL_BACKEND="django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH=os.path.join(BASE_DIR,"sent_mails")

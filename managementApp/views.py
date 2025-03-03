@@ -22,11 +22,23 @@ def ShowLoginPage(req):
     return render(req,"login_page.html")
 
 # To Auth the User via email and password
+import logging
+
+logger = logging.getLogger(__name__)
+
+import logging
+
+logger = logging.getLogger(__name__)
+
 def doLogin(req):
-    if req.method!="POST":
+    if req.method != "POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
-        user=EmailBackEnd.authenticate(req,username=req.POST.get("email"),password=req.POST.get("password"))
+        email = req.POST.get("email")
+        password = req.POST.get("password")
+        email = req.POST.get("email")
+        password = req.POST.get("password")
+        user = authenticate(req, username=email, password=password)
         if user!=None:
             login(req,user)
             if user.user_type=="1":
@@ -36,7 +48,9 @@ def doLogin(req):
             else:
                 return HttpResponseRedirect(reverse("student_home"))
         else:
-            messages.error(req,"Invalid Login Details")
+            logger.warning(f"Invalid login attempt for email: {email}")
+            logger.warning(f"Invalid login attempt for email: {email}")
+            messages.error(req, "Invalid Login Details")
             return HttpResponseRedirect("/")
 
 # For Demo Usage
@@ -63,7 +77,7 @@ def registerPage(req):
             first_name=form.cleaned_data["first_name"]
             last_name=form.cleaned_data["last_name"]
             email=form.cleaned_data["email"]
-            password=form.cleaned_data["password"]
+            password=make_password(form.cleaned_data["password"])
             address=form.cleaned_data["address"]
             user_type=form.cleaned_data["user_type"]
             try:
